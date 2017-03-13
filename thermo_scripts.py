@@ -1143,65 +1143,14 @@ def mslp_to_station_prs(prs, alt, temp):
 
     return station_p
 
-#print mslp_to_station_prs(97660, 300.0, 298)
-"""
-Debug mixed_lvl script, then see if CAPE and CIN values from mixed_lvl values
-match the CAPE and CIN values from the UWyoming Skew-T page,
-http://weather.uwyo.edu/upperair/sounding.html
-"""
-
-#-------------------------------------------------------------------------------
-"""
-T = 300.0
-P = 80000.0
-Td = 290.0
-
-print
-[T_lcl, P_lcl] = LCL(T, P, Td)
-rh = (e_s(Td) / e_s(T)) * 100
-print "T_lcl (deg C) =", round((T_lcl - 273.15), 2)
-print "P_lcl (mb) =", round((P_lcl / 100.0), 2)
-print "w (g/kg) =", round((mixing(Td, P) * 1000.0), 2)
-print "Td (deg C) =", round((Td - 273.15), 2) 
-print "Te (deg C) =", round((T_e(T, P, Td) - 273.15), 2)
-print "Tv (deg C) =", round((virt_T(T, mixing(Td, P)) - 273.15), 2)
-print "Twb (deg C) =", round((wet_bulb(T, P, Td) -273.15), 2)
-print "Theta e (deg C) =", round((theta_e(T, P, Td) - 273.15), 2)
-print "Theta es (deg C) =", round((theta_es(T, P) - 273.15), 2)
-print "Theta wb (deg C) =", round((theta_wb(T, P, Td) - 273.15), 2)
-print "Theta (deg C) =", round((theta(T, P) - 273.15), 2)
-print "Relative Humidity =", round(rh, 2)
-"""
 #-------------------------------------------------------------------------------
 """
 Notes for development:
 
-For functions involving lin_interp, check before hand to make sure prs array
-starts at the surface and goes towards space. If this is not so, the prs, temp,
-and dew arrays will need to be concatenated into a 3 X n array and then sorted
-along the prs axis. If this is not done, certain functions (like the env_prof
-and parcel_prof) will not work.
+Re-write LFC and EL scripts in fortran so they run faster, then use f2py so
+functions can be called in Python.
 
-Re-write LFC and EL scripts in fortran so they run faster, then use f2py.
-
-Rewrite e_s(T) function so that way it uses the mroe accurate equation (equation
-5.67in Bohren's "Atmospheric Thermodynamics") which incorporates dependence of
-lv on temperature.
-
-Use equation 6.164 and 1.166 in Bohren's "Atmospheric Thermodynamics" to write
-scripts to find the CAPE and CINE.
-
-Find way to import data from http://weather.uwyo.edu/upperair/sounding.html as
-a text output, and then graph that data (this will involve writing a simple API
-to handle requests using the urlopen function in Python)
-
-Incorporate some dynamics! (refer to meteo 421 hwk 6 for ideas)can calculate
-buoyancy period, vertical shear, Richardson Number, etc. Scripts for this are
-already under development in the meteo421_hwk6.py file. May want to create a
-numerical methods script first so we already have stock functions to compute
-center differences, etc. Can also calculate some easier quantities like Rossby
-wave phase velocity, graphs of gravity waves, etc.
-
-Create a class called atmosphere and have each of the above functions be methods
-for that class. This will help you get better with Object-Oriented Programming.
+Rewrite e_s(T) function so that way it uses the more accurate equation (equation
+5.67 in Bohren's "Atmospheric Thermodynamics") which incorporates the dependence
+of lv on temperature.
 """
