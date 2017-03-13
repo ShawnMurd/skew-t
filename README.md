@@ -1,2 +1,2 @@
 # skew-t
-Python scripts to calculate various thermodynamic quantities and plot a Skew-T Log-P diagram for a sounding.
+A collection of Python scripts to calculate various thermodynamic quantities and plot Skew-T Log-P diagrams.
